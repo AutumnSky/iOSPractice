@@ -15,12 +15,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 키보드 프레임이 변경되었을 때 (UIKeyboardWillChangeFrame) 이벤트를 받기 위해 노티피케이션을 등록합니다
+        // 키보드 프레임이 변경되었을 때 (UIKeyboardWillChangeFrame) 이벤트를 받기 위해 노티피케이션을 등록
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.keyboardNotification(notification:)),
                                                name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
-        // 스크롤뷰 영역 (텍스트 필드 영역 밖)을 누르면 키보드를 숨깁니다
+        // 스크롤뷰 영역 (텍스트 필드 영역 밖)을 누르면 키보드를 숨김
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard))
         self.scrollView.addGestureRecognizer(tap)
     }
@@ -30,12 +30,12 @@ class ViewController: UIViewController {
         
     }
     
-    // 메모리에서 정리될 때 노티피케이션에 등록된 self를 삭제해줍니다
+    // 메모리에서 정리될 때 노티피케이션에 등록된 self를 삭제
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
-    // viewDidLoad에서 키보드 프레임이 변경될 때 호출되도록 설정했기 때문에 키보드 프레임이 변경될 때 마다 호출됩니다
+    // viewDidLoad에서 키보드 프레임이 변경될 때 호출되도록 설정했기 때문에 키보드 프레임이 변경될 때 마다 호출
     // 예) 키보드 등장할 때, 키보드 사라질 때, 이모지등으로 키보드 레이아웃이 바뀔 때
     @objc func keyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
@@ -56,6 +56,7 @@ class ViewController: UIViewController {
                            options: animationCurve,
                            animations: {
                             
+                            // 스크롤뷰의 bottom inset을 키보드 높이만큼 설정해준다
                             let keyboardHeight = self.view.frame.size.height - (endFrame?.origin.y)!
                             self.scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
             },
